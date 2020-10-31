@@ -34,7 +34,7 @@ def profile(uname):
     return render_template("profile/profile.html", user = user, quote=quote)
 
 
-@main.route('/user/<uname>/update',methods = ['GET','POST'])
+@main.route('/user/<uname>/update',methods = ['GET','opinion'])
 @login_required
 def update_profile(uname):
     quote = get_quote()
@@ -54,7 +54,7 @@ def update_profile(uname):
 
     return render_template('profile/update.html',form =form, quote=quote)
 
-@main.route('/user/<uname>/update/pic',methods= ['POST'])
+@main.route('/user/<uname>/update/pic',methods= ['opinion'])
 @login_required
 def update_pic(uname):
     quote = get_quote()
@@ -66,9 +66,10 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
-@main.route('/opinion/', methods = ['GET','POST'])
+@main.route('/opinion/', methods = ['GET','opinion'])
 @login_required
 def new_opinion():
+    quote = get_quote()
 
     form = OpinionForm()
 
@@ -85,12 +86,52 @@ def new_opinion():
 
         return redirect(url_for('main.index'))
 
-    return render_template('opinion.html',form= form)
+    return render_template('opinion.html',form= form, quote=quote)
 
-@main.route('/opinion/all', methods=['GET', 'POST'])
+@main.route('/opinion/all', methods=['GET', 'opinion'])
 @login_required
 def all():
     opinions = Opinion.query.all()
     quote = get_quote()
     return render_template('opinions.html', opinions=opinions, quote=quote)
+@main.route('/comments/<id>')
+@login_required
+def comment(id):
+    '''
+    function to return the comments
+    '''
+    quote = get_quote()
+    comm =Comment.get_comments(id)
+    title = 'comments'
+    return render_template('comments.html',comment = comm,title = title,quote=quote)
+
+@main.route('/new_comment/<int:opinion_id>', methods = ['GET', 'opinion'])
+@login_required
+def new_comment(opinion_id):
+    quote = get_quote()
+    opinions = Opinion.query.filter_by(id = opinion_id).first()
+    form = CommentForm()
+
+    if form.validate_on_submit():
+        comment = form.comment.data
+
+        new_comment = Comment(comment=comment,user_id=current_user.id, opinion_id=opinion_id)
+
+        new_comment.save_comment()
+
+        return redirect(url_for('main.index'))
+    title='New comment'
+    return render_template('new_comment.html',title=title,comment_form = form,opinion_id=opinion_id,quote=quote)
+
+@main.route('/view/<int:id>', methods=['GET', 'POST'])
+@login_required
+def view(id):
+    opinion = Opinion.query.get_or_404(id)
+    opinion_comments = Comment.query.filter_by(opinion_id=id).all()
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        new_comment = Comment(opinion_id=id, comment=comment_form.comment.data, username=current_user)
+        new_comment.save_comment()
+
+    return render_template('view.html', opinion=opinion, opinion_comments=opinion_comments, comment_form=comment_form)
 

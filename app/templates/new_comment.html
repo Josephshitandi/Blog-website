@@ -1,0 +1,36 @@
+{% extends 'base.html'%}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block styles%} {{ super() }}
+<link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}"> 
+{% endblock %}
+
+{% block content %}
+<body>
+
+  <div class="container">
+    <div class="row">
+      <br> <hr> <br>
+
+      <div class="col-md-3"></div>
+            
+      <div class="col-md-6"> 
+        <h3 class="text-center" >LEAVE A COMMENT HERE</h3>
+        {{ wtf.quick_form(comment_form) }}
+      </div>  
+
+      <div class="col-md-3"></div>
+    </div>
+
+  </div>
+  <footer class="footer mt-4">
+    <div class="social-icons">
+        <i class="fa fa-2x fa-facebook"></i>
+        <i class="fa fa-2x fa-twitter"></i>
+        <i class="fa fa-2x fa-instagram"></i>
+    </div>
+    <p class="text-center pt-2">Copyright &copy; 2020 Design by Joseph Shitandi</p>
+</footer>
+
+</body>
+
+{% endblock %}
