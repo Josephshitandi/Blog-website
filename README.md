@@ -3,7 +3,7 @@
 <table>
 <tr>
 <td>
-This is Joseph Shitandi's blog website where one can create and share their opinions. One can also read and comment on tose opinions. Anyone interested can create account, login in, add opinion or leave a comment.
+This is Joseph Shitandi's blog website where one can create and share their opinions. One can also read and comment on those opinions. Anyone interested can create account, login in, add opinion or leave a comment.
 </td>
 </tr>
 </table>
