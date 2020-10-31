@@ -1,7 +1,11 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
 {% block content %}
 <div class="container">
     <div class="row">
         <!-- displaying  Username-->
+        
         <div class="col-md-4">
             <h3> {{user.username| capitalize}} </h3>
 
@@ -37,6 +41,13 @@
               {% endif %}
           </div>
         
+    </div>
+</div>
+<div class="text-center quote">
+    <div class="row">
+        <div class="col-md-6">
+            <p>{{quote.quote}}</p>
+        </div>
     </div>
 </div>
 {% endblock %}

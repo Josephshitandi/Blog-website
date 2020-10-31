@@ -1,8 +1,17 @@
 {% extends 'base.html' %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+
 {% block content %}
 <div class="container">
+    
   {{wtf.quick_form(form)}}
+</div>
+<div class="text-center quote">
+    <div class="row">
+        <div class="col-md-6">
+            <p>{{quote.quote}}</p>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -2,6 +2,7 @@ from . import auth
 from flask import render_template,redirect,url_for, flash,request
 from flask_login import login_user,logout_user,login_required
 from ..models import User
+from ..request import get_quote
 from .forms import LoginForm,RegistrationForm
 from .. import db
 from ..email import mail_message
@@ -9,6 +10,7 @@ from ..email import mail_message
 
 @auth.route('/login',methods=['GET','POST'])
 def login():
+    quote = get_quote()
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user = User.query.filter_by(email = login_form.email.data).first()
@@ -18,11 +20,12 @@ def login():
 
         flash('Invalid username or Password')
 
-    title = "Pitch Application login"
-    return render_template('auth/login.html',login_form = login_form,title=title)
+    title = "Shitandi blog website"
+    return render_template('auth/login.html',login_form = login_form,title=title, quote=quote)
 
 @auth.route('/register',methods = ["GET","POST"])
 def register():
+    quote = get_quote()
     form = RegistrationForm()
     if form.validate_on_submit():
         print('password', form.password.data)
@@ -30,11 +33,11 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        mail_message("Welcome to login walkthrough","email/welcome_user",user.email,user=user)
+        mail_message("Welcome to Joseph Shitandi blog website","email/welcome_user",user.email,user=user)
 
         return redirect(url_for('auth.login'))
         title = "New Account"
-    return render_template('auth/register.html',registration_form = form)
+    return render_template('auth/register.html',registration_form = form, quote=quote)
 
 @auth.route('/logout')
 @login_required

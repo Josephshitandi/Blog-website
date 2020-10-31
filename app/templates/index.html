@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% import 'macros.html' as macro%}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 <!-- Styles block -->
 
@@ -13,6 +14,13 @@
     <h1 style="color: brown;">
         <center><b>WELCOME TO SHITANDI BLOG WEBSITE</b></center>
     </h1>
-    
+    <br><br>
+    <div class="text-center quote">
+        <div class="row">
+            <div class="col-md-6">
+                <p>{{quote.quote}}</p>
+            </div>
+        </div>
+    </div>
     {% endblock%}
 
