@@ -8,8 +8,8 @@ class UpdateProfile(FlaskForm):
     submit = SubmitField('Submit')
     
 class OpinionForm(FlaskForm):
-    title = StringField('Pitch Title')
-    opinion = TextAreaField('Opinion')
+    opinion_title = StringField('Pitch Title')
+    description = TextAreaField('Opinion')
     submit = SubmitField('Submit')
     
 class CommentForm(FlaskForm):

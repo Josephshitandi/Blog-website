@@ -20,6 +20,8 @@ class User(UserMixin,db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     pass_secure = db.Column(db.String(255))
+    opinion = db.relationship('Opinion', backref='username', lazy='dynamic')
+    comments = db.relationship('Comment', backref='username', lazy=True)
     
     @property
     def password(self):
@@ -47,4 +49,32 @@ class Role(db.Model):
     def __repr__(self):
         return f'User {self.name}'
     
+
+class Opinion(db.Model):
+    __tablename__ = 'opinions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    opinion_title = db.Column(db.String(255), index=True)
+    description = db.Column(db.String(255), index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    
+
+    def save_opinion(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_opinions(cls, id):
+        opinions = Post.query.filter_by(id=id).all()
+        return opinions
+
+    @classmethod
+    def get_all_opinions(cls):
+        opinions = Opinion.query.order_by('-id').all()
+        return opinions
+
+    def __repr__(self):
+        return f'Posts {self.opinion_title}'
     
