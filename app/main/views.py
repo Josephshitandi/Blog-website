@@ -66,7 +66,7 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
-@main.route('/opinion/', methods = ['GET','opinion'])
+@main.route('/opinion/new_opinion', methods = ['GET','POST'])
 @login_required
 def new_opinion():
     quote = get_quote()
@@ -88,7 +88,7 @@ def new_opinion():
 
     return render_template('opinion.html',form= form, quote=quote)
 
-@main.route('/opinion/all', methods=['GET', 'opinion'])
+@main.route('/opinion/all', methods=['GET', 'POST'])
 @login_required
 def all():
     opinions = Opinion.query.all()
@@ -105,7 +105,7 @@ def comment(id):
     title = 'comments'
     return render_template('comments.html',comment = comm,title = title,quote=quote)
 
-@main.route('/new_comment/<int:opinion_id>', methods = ['GET', 'POST'])
+@main.route('/new_comment/<int:opinion_id>', methods = ['GET','POST'])
 @login_required
 def new_comment(opinion_id):
     quote = get_quote()
