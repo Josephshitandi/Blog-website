@@ -11,7 +11,7 @@ This is Joseph Shitandi's blog website where one can create and share their opin
 ## Demo
 Here is a working live demo : https://shitandi-blog-website.herokuapp.com/
 
-Here is my figma link: 
+Here is my figma link: https://www.figma.com/file/iMmqvp5H5MRLZsPL7v5Isu/shitandi-blog-website
 
 ## Mobile support
 The Blog-website is compatible with devices of all sizes and all OS's, and consistent improvements are being made.
