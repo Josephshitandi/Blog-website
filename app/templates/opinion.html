@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block content %}
+<div class="container-fluid">
+<div class="banner-post-banner">
+    <div class="container" id="post-banner">
+        <h2 class="text-center text-white">Add Opinion</h2>
+        <p class="text-center text-white">Add your Opinion or quote here..</p>
+    </div>
+</div>
+</div>
+<div class="container pt-2">
+    <div class="row">
+        <div class="col-md-2"></div>
+         <div class="col-md-8 pt-3">
+            {{ wtf.quick_form(post_form)}}
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+</div>
+    <footer class="footer mt-4">
+        <div class="social-icons">
+            <i class="fa fa-2x fa-facebook"></i>
+            <i class="fa fa-2x fa-twitter"></i>
+            <i class="fa fa-2x fa-instagram"></i>
+        </div>
+        <p class="pt-2">Copyright &copy; 2020 Design by Joseph Shitandi</p>
+    </footer>
+{% endblock %}

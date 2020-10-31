@@ -1,7 +1,7 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
 from .forms import UpdateProfile
-from ..models import User
+from ..models import User,Opinion,Comment
 from ..request import get_quote
 from flask_login import login_required,current_user
 from .. import db,photos
@@ -65,3 +65,26 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+@main.route('/opinion/', methods = ['GET','POST'])
+@login_required
+def new_opinion():
+
+    form = OpinionForm()
+
+    if form.validate_on_submit():
+        opinion= form.description.data
+        title=form.opinion_title.data
+
+        # Updated opinion instance
+        new_opinion = Opinions(title=title,opinion= opinion,user_id=current_user.id)
+
+        title='New opinion'
+
+        new_opinion.save_opinion()
+
+        return redirect(url_for('main.index'))
+
+    return render_template('opinion.html',form= form)
+
+
