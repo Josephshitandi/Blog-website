@@ -1,6 +1,6 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from .forms import UpdateProfile
+from .forms import UpdateProfile,OpinionForm,CommentForm
 from ..models import User,Opinion,Comment
 from ..request import get_quote
 from flask_login import login_required,current_user
@@ -77,7 +77,7 @@ def new_opinion():
         title=form.opinion_title.data
 
         # Updated opinion instance
-        new_opinion = Opinions(title=title,opinion= opinion,user_id=current_user.id)
+        new_opinion = Opinion(opinion_title=title,description= opinion,user_id=current_user.id)
 
         title='New opinion'
 
@@ -87,4 +87,10 @@ def new_opinion():
 
     return render_template('opinion.html',form= form)
 
+@main.route('/opinion/all', methods=['GET', 'POST'])
+@login_required
+def all():
+    opinions = Opinion.query.all()
+    quote = get_quote()
+    return render_template('opinions.html', opinions=opinions, quote=quote)
 
