@@ -34,7 +34,7 @@ def profile(uname):
     return render_template("profile/profile.html", user = user, quote=quote)
 
 
-@main.route('/user/<uname>/update',methods = ['GET','opinion'])
+@main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
 def update_profile(uname):
     quote = get_quote()
@@ -54,7 +54,7 @@ def update_profile(uname):
 
     return render_template('profile/update.html',form =form, quote=quote)
 
-@main.route('/user/<uname>/update/pic',methods= ['opinion'])
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
 @login_required
 def update_pic(uname):
     quote = get_quote()
@@ -105,7 +105,7 @@ def comment(id):
     title = 'comments'
     return render_template('comments.html',comment = comm,title = title,quote=quote)
 
-@main.route('/new_comment/<int:opinion_id>', methods = ['GET', 'opinion'])
+@main.route('/new_comment/<int:opinion_id>', methods = ['GET', 'POST'])
 @login_required
 def new_comment(opinion_id):
     quote = get_quote()
