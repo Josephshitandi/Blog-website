@@ -66,6 +66,18 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
+@main.route('/writer/<uname>/update/pic',methods= ['POST'])
+@login_required
+def update_writer_pic(uname):
+    quote = get_quote()
+    writer = Writer.query.filter_by(writer_name = uname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        Writer.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',uname=uname))
+
 @main.route('/opinion/new_opinion', methods = ['GET','POST'])
 @login_required
 def new_opinion():
@@ -84,7 +96,7 @@ def new_opinion():
 
         new_opinion.save_opinion()
 
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.new_opinion'))
 
     return render_template('opinion.html',form= form, quote=quote)
 
